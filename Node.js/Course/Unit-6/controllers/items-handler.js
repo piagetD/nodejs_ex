@@ -17,6 +17,7 @@
 
 // Node Dev TODO: Add your code here、
 const itemsDao = require('../models/items-dao');
+const logger = require('../utils/logger');
 
 /**
   * Handle (that is, resolve() or reject()) request for items search
@@ -43,13 +44,21 @@ const itemsDao = require('../models/items-dao');
             reject(err);
         });
     } else if (query.upc) {
-        // By upc?
-        // Node Dev TODO: Add your code here
-        reject('Node Dev TODO: WRITE CODE!');// Remove this when you're done
+        logger.debug(`Query by upc: ${query.upc}`, 'handleItemsSearch()');
+        // Query DAO: 
+        itemsDao.findByUpc(query.upc).then((result) => {
+            resolve(result);// ok if query results in no data
+        }).catch((err) => {
+            reject(err);
+        });
     } else if (query.id) {
-        // By id?
-        // Node Dev TODO: Add your code here
-        reject('Node Dev TODO: WRITE CODE!');// Remove this when you're done
+        logger.debug(`Query by id: ${query.id}`, 'handleItemsSearch()');
+        // Query DAO: 
+        itemsDao.findById(query.id).then((result) => {
+            resolve(result);// ok if query results in no data
+        }).catch((err) => {
+            reject(err);
+        });
     } else {
         let message = `Unsupported search param: ${parsedUrl.search}`;
         logger.error(message, 'handleItemsSearch()');

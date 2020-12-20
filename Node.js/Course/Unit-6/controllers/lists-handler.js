@@ -27,6 +27,9 @@
 
 // TODO: Figure out what require()s go here
 
+const listsDao = require('../models/lists-dao');
+const logger = require('../utils/logger');
+const utils = require('../utils/utils');
 /**
  * Handle (that is, resolve() or reject()) request for lists
  * to find by Id (e.g., GET /lists/123)
@@ -55,7 +58,7 @@ function handleListsCreate(request, resolve, reject) {
         // Node Dev TODO: Add your code here
         // Parse the request body into a JSON object
         // Call the DAO and resolve or reject based on the results
-        reject('Node Dev TODO: WRITE CODE!');// Remove this when you're done
+        resolve(listsDao.create(requestBody));
     }).catch((err) => {
         logger.error(`Error processing request body: ${err.message}`, 'handleListsCreate()');
         reject(err);
@@ -70,7 +73,16 @@ function handleListsCreate(request, resolve, reject) {
  */
 function handleListsUpdate(request, resolve, reject, id) {
     // Node Dev TODO: Add your code here
-    reject('Node Dev TODO: WRITE CODE!');// Remove this when you're done
+    utils.processRequestBody(request).then((requestBody) => {
+        logger.debug(`Calling listsDao.handleListsUpdate() with request: ${requestBody}`, 'handleListsUpdate()');
+        // Node Dev TODO: Add your code here
+        // Parse the request body into a JSON object
+        // Call the DAO and resolve or reject based on the results
+        resolve(listsDao.update(id, requestBody));
+    }).catch((err) => {
+        logger.error(`Error processing request body: ${err.message}`, 'handleListsCreate()');
+        reject(err);
+    });
 }
 
 /**
@@ -108,7 +120,10 @@ function handleListsAddItem(request, resolve, reject, id, secondaryResource) {
         logger.debug(`Calling listsDao.addItem(listId=${id},secondaryResource=${secondaryResource})`, 'handleListsAddItem()');
         // Node Dev TODO: Add your code here
         // Process request body (asynchronously), and "then" call the DAO
-        reject('Node Dev TODO: WRITE CODE!');// Remove this when you're done
+        utils.processRequestBody(request).then((requestBody) => {
+            let obj = JSON.parse(requestBody);
+            resolve(listsDao.addItem(id, obj.itemId, obj.quantity));
+        });
     } else {
         let message = `secondaryResource: ${secondaryResource} is not supported.`;
         logger.error(message, 'handleListsAddItem()');
@@ -130,7 +145,10 @@ function handleListsWithItemsUpdate(request, resolve, reject, id, secondaryResou
         logger.debug(`Calling listsDao.updateItem(listId=${id},secondaryResource=${secondaryResource},secondaryResourceId=${secondaryResourceId})`, 'handleListsWithItemsUpdate()');
         // Node Dev TODO: Add your code here
         // Process request body (asynchronously), and "then" call the DAO
-        reject('Node Dev TODO: WRITE CODE!');// Remove this when you're done
+        utils.processRequestBody(request).then((requestBody) => {
+            let obj = JSON.parse(requestBody);
+            resolve(listsDao.updateItem(id, secondaryResourceId, obj.quantity, obj.pickedUp));
+        });
     } else {
         let message = `secondaryResource: ${secondaryResource} is not supported.`;
         logger.error(message, 'handleListsWithItemsUpdate()');
@@ -151,7 +169,9 @@ function handleListsWithItemsDelete(request, resolve, reject, id, secondaryResou
         logger.debug(message, 'handleListsWithItemsDelete()');
         // Node Dev TODO: Add your code here
         // Process request body (asynchronously), and "then" call the DAO
-        reject('Node Dev TODO: WRITE CODE!');// Remove this when you're done
+        utils.processRequestBody(request).then((requestBody) => {
+            resolve(listsDao.removeItem(id, secondaryResourceId));
+        });
     } else {
         let message = `secondaryResource: ${secondaryResource} is not supported.`;
         logger.error(message, 'handleListsWithItemsDelete()');
@@ -161,3 +181,11 @@ function handleListsWithItemsDelete(request, resolve, reject, id, secondaryResou
 
 // Node Dev TODO: Add your code here
 // TODO: Make sure to export the functions you want to be visible to the rest of the app
+
+module.exports.handleListsFindById = handleListsFindById;
+module.exports.handleListsCreate = handleListsCreate;
+module.exports.handleListsUpdate = handleListsUpdate;
+module.exports.handleListsAddItem = handleListsAddItem;
+module.exports.handleListsWithItemsUpdate = handleListsWithItemsUpdate;
+module.exports.handleListsWithItemsDelete = handleListsWithItemsDelete;
+module.exports.handleListsFindByIdWithAllItems = handleListsFindByIdWithAllItems;

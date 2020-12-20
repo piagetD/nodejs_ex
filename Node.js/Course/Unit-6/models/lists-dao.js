@@ -15,6 +15,8 @@
  */
 'use strict'
 
+const { processRequestBody } = require("../utils/utils")
+
 /**
  * This is the DAO interface for the application.
  * You will need to provide an implementation for each
@@ -23,21 +25,20 @@
  * file located in this directory.
  */
 
-// Node Dev TODO: Add your code here
-// TODO: figure out what "require"ments you need here
+ const sqlDao = require('./lists-dao-sqlite3');
 
 /**
  * Create a shopping list with the specified description
  */
 function create(description) {
-// Node Dev TODO: Add your code here
+  return sqlDao.create(description);
 }
 
 /**
  * Find the shopping list with the specified id
  */
 function findById(id) {
-// Node Dev TODO: Add your code here
+  return sqlDao.findById(id);
 }
 
 /**
@@ -45,7 +46,7 @@ function findById(id) {
  * and return all items associated with it
  */
 function findByIdWithAllItems(id) {
-// Node Dev TODO: Add your code here
+  return sqlDao.findByIdWithAllItems(id);
 }
 
 /**
@@ -53,7 +54,7 @@ function findByIdWithAllItems(id) {
  * with new field values
  */
 function update(id, description) {
-// Node Dev TODO: Add your code here
+  return sqlDao.update(id, description);
 }
 
 /**
@@ -61,7 +62,7 @@ function update(id, description) {
  * list, along with values for the relationship
  */
 function addItem(listId, itemId, quantity) {
-// Node Dev TODO: Add your code here
+  return sqlDao.addItem(listId, itemId, quantity);
 }
 
 /**
@@ -69,7 +70,7 @@ function addItem(listId, itemId, quantity) {
  * list, along with values for the relationship
  */
 function updateItem(listId, itemId, quantity, pickedUp) {
-// Node Dev TODO: Add your code here
+  return sqlDao.updateItem(listId, itemId, quantity, pickedUp);
 }
 
 /**
@@ -77,8 +78,13 @@ function updateItem(listId, itemId, quantity, pickedUp) {
  * list
  */
 function removeItem(listId, itemId) {
-// Node Dev TODO: Add your code here
+  return sqlDao.removeItem(listId, itemId);
 }
 
-// Node Dev TODO: Add your code here
-// TODO: export functions that need to be visible outside this module
+module.exports.create = create;
+module.exports.findById = findById;
+module.exports.findByIdWithAllItems = findByIdWithAllItems;
+module.exports.update = update;
+module.exports.addItem = addItem;
+module.exports.updateItem = updateItem;
+module.exports.removeItem = removeItem;

@@ -24,6 +24,7 @@
  */
 
 const sqlDao = require('./items-dao-sqlite3');
+const logger = require('../utils/logger');
 
 /**
  * Find the Item object by the specified ID
@@ -46,7 +47,6 @@ function findById(id) {
 function findByDescription(partialDescription) {
     return sqlDao.findByDescription(partialDescription);
 }
-
 /**
  * Find the Item object that matches the specified
  * UPC exactly.
