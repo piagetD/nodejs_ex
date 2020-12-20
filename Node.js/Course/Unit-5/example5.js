@@ -20,7 +20,7 @@ const fs = require('fs');
 const logger = require('../common/logger');
 
 // Max number of iterations to perform
-const ITERATIONS_MAX = 2;
+const ITERATIONS_MAX = 4;
 
 // Iteration counter
 let iteration = 0;

@@ -32,11 +32,11 @@ const fs = require('fs');
 const database = require('sqlite3').verbose();
 
 // Logger
-const logger = require('../utils/logger');
+const logger = require('./logger');
 //logger.setLogLevel(logger.Level.DEBUG);
 
 // Simple utils
-const utils = require('../utils/utils');
+const utils = require('./utils');
 
 const appSettings = require('../config/app-settings');
 
@@ -66,7 +66,6 @@ function createDbFixtures(db) {
             db.run('DROP TABLE IF EXISTS shopping_list_item');
             db.run('DROP TABLE IF EXISTS shopping_list');
             db.run('DROP TABLE IF EXISTS item');
-            db.run('DROP TABLE IF EXISTS brand');
             logger.info('Dropping all tables, done.', 'createDbFixtures()');
             resolve();
         }).then(() => {
@@ -75,11 +74,6 @@ function createDbFixtures(db) {
             logger.info('Creating item table...', 'createDbFixtures()');
             db.run(itemSql);
             logger.info('Creating item table, done.', 'createDbFixtures()')
-            return loadFile(appSettings.create_sql.brand);
-        }).then((brandSql) => {
-            logger.info('Creating brand table...', 'createDbFixtures()');
-            db.run(brandSql);
-            logger.info('Creating brand table, done.', 'createDbFixtures()');
             return loadFile(appSettings.create_sql.shopping_list);
         }).then((shoppingListSql) => {
             logger.info('Creating shopping_list table...', 'createDbFixtures()');
@@ -196,14 +190,9 @@ function handleItemRowForSqlDb(db, fields) {
     // Create db fixtures (e.g., tables, if applicable)
     let returnPromise = createDbFixtures(db);
     returnPromise.then(() => {
-        logger.info('Loading data for brand...', 'mainline:createDbFixtures(resolved Promise)');
-        loadData(db, appSettings.brand_file_name, handleBrandRowForSqlDb).then(() => {
-            logger.info('Loading brand data, done.', 'mainline:createDbFixtures(resolved Promise)');
-            logger.info('Loading data for item...', 'mainline:createDbFixtures(resolved Promise)');
-            loadData(db, appSettings.item_file_name, handleItemRowForSqlDb).then(() => {
-                logger.info('Loading item data, done.', 'mainline:createDbFixtures(resolved Promise)');
-                logger.info('Script finished at: '+ new Date().toLocaleString(), 'mainline:createDbFixtures(resolvedPromise)');
-            });
+        loadData(db, appSettings.item_file_name, handleItemRowForSqlDb).then(() => {
+            logger.info('Loading item data, done.', 'mainline:createDbFixtures(resolved Promise)');
+            logger.info('Script finished at: '+ new Date().toLocaleString(), 'mainline:createDbFixtures(resolvedPromise)');
         });
     }).catch((err) => {
         logger.error('Better luck next time: ' + err.message, 'mainline():createDbFixtures(rejected Promise)');

@@ -26,5 +26,8 @@
   "homepage": "https://github.com/jstevenperry/IBM-Code#readme",
   "dependencies": {
     "sqlite3": "^4.0.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

@@ -38,4 +38,5 @@ const timeout = setInterval(() => {
     logger.info('END: setInterval', 'TIMERS PHASE');
 }, 10);
 
+iteration = iteration + 1;
 logger.info('END', 'mainline');

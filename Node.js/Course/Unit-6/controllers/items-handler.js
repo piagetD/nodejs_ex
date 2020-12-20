@@ -15,8 +15,8 @@
  */
 'use strict'
 
-// Node Dev TODO: Add your code here
-// TODO: figure out what require()s go here
+// Node Dev TODO: Add your code here、
+const itemsDao = require('../models/items-dao');
 
 /**
   * Handle (that is, resolve() or reject()) request for items search

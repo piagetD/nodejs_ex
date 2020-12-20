@@ -23,8 +23,7 @@
  * file located in this directory.
  */
 
-// Node Dev TODO: Add your code here
-// TODO: a particular require() goes here to access the Sqlite3 implementation
+const sqlDao = require('./items-dao-sqlite3');
 
 /**
  * Find the Item object by the specified ID
@@ -34,7 +33,7 @@
  * to locate
  */
 function findById(id) {
-// Node Dev TODO: Add your code here
+    return sqlDao.findById(id);
 }
 
 /**
@@ -45,7 +44,7 @@ function findById(id) {
  * and return items whose description contains this partial description
  */
 function findByDescription(partialDescription) {
-// Node Dev TODO: Add your code here
+    return sqlDao.findByDescription(partialDescription);
 }
 
 /**
@@ -56,8 +55,9 @@ function findByDescription(partialDescription) {
  * to locate
  */
 function findByUpc(upc) {
-// Node Dev TODO: Add your code here
+    return sqlDao.findByUpc(upc);
 }
 
-// Node Dev TODO: Add your code here
-// TODO: make sure to export functions that need to be visible outside this module
+module.exports.findById = findById;
+module.exports.findByDescription = findByDescription;
+module.exports.findByUpc = findByUpc;
