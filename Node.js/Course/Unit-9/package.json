@@ -1,0 +1,52 @@
+{
+  "name": "Logger",
+  "version": "1.0.0",
+  "description": "a ex for Logger",
+  "main": "logger.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "nyc mocha ./test",
+    "lint": "eslint .",
+    "lint-fix": "npm run lint -- --fix",
+    "pretest": "npm run lint"
+  },
+  "keywords": [],
+  "author": "yuzd",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.2.0",
+    "eslint-config-google": "^0.14.0",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
+    "sinon": "^9.2.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "google"
+    ],
+    "env": {
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6
+    },
+    "rules": {
+      "max-len": [
+        2,
+        120,
+        4,
+        {
+          "ignoreUrls": true
+        }
+      ],
+      "no-console": 0
+    }
+  },
+  "eslintIgnore": [
+    "node_modules"
+  ]
+}

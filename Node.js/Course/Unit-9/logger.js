@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
- 'use strict';
+'use strict';
 
 //* *********************************************************
 //* makoto-logger                                           *
@@ -47,7 +47,7 @@ const Level = {
 // The default log level
 const DEFAULT_LOG_LEVEL = Level.INFO;
 // The current Log level
-let logLevel = DEFAULT_LOG_LEVEL;
+const logLevel = DEFAULT_LOG_LEVEL;
 
 /**
  * Allows dependent module to mutate the log level
@@ -56,6 +56,7 @@ let logLevel = DEFAULT_LOG_LEVEL;
  */
 function setLogLevel(newLevel) {
   // TODO: Set logLevel variable to new value
+  logLevel = newLevel;
 }
 
 /**
@@ -82,8 +83,8 @@ function log(messageLogLevel, message, source, logFunction) {
   if (messageLogLevel.priority >= logLevel.priority) {
     // Compute the message text based on log level output string, and whether
     // / or not the startTime was present
-    let now = Date.now();
-    let outputString = now.toString() + ':' + messageLogLevel.outputString;
+    const now = Date.now();
+    const outputString = now.toString() + ':' + messageLogLevel.outputString;
     computedMessage = outputString + ': ' + ((source) ? source + ': ' : '') +
       message;
     // Now log the computed message
@@ -115,6 +116,7 @@ function logMessage(computedMessage) {
  */
 function trace(message, source, logFunction) {
   // TODO: Implement me
+  log.apply(Level.TRACE, message, source, logFunction);
 }
 
 /**
@@ -128,7 +130,7 @@ function trace(message, source, logFunction) {
  * the current log level at the moment this function was called.
  */
 function debug(message, source, logFunction) {
-  // TODO: Implement me
+  log.apply(Level.DEBUG, message, source, logFunction);
 }
 
 /**
@@ -142,7 +144,7 @@ function debug(message, source, logFunction) {
  * the current log level at the moment this function was called.
  */
 function info(message, source, logFunction) {
-  // TODO: Implement me
+  log.apply(Level.INFO, message, source, logFunction);
 }
 
 /**
@@ -156,7 +158,7 @@ function info(message, source, logFunction) {
  * the current log level at the moment this function was called.
  */
 function warn(message, source, logFunction) {
-  // TODO: Implement me
+  log.apply(Level.WARN, message, source, logFunction);
 }
 
 /**
@@ -170,7 +172,7 @@ function warn(message, source, logFunction) {
  * the current log level at the moment this function was called.
  */
 function error(message, source, logFunction) {
-  // TODO: Implement me
+  log.apply(Level.ERROR, message, source, logFunction);
 }
 
 /**
@@ -184,7 +186,7 @@ function error(message, source, logFunction) {
  * the current log level at the moment this function was called.
  */
 function fatal(message, source, logFunction) {
-  // TODO: Implement me
+  log.apply(Level.FATAL, message, source, logFunction);
 }
 
 //* ***********************
@@ -196,4 +198,9 @@ module.exports.Level = Level;
 module.exports.DEFAULT_LOG_LEVEL = DEFAULT_LOG_LEVEL;
 // Lets the dependent modules set the log level
 module.exports.setLogLevel = setLogLevel;
-// TODO: Export helper functions
+module.exports.trace = trace;
+module.exports.info = info;
+module.exports.warn = warn;
+module.exports.debug = debug;
+module.exports.fatal = fatal;
+module.exports.error = error;

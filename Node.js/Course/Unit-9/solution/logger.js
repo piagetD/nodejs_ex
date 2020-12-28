@@ -82,8 +82,8 @@ function log(messageLogLevel, message, source, logFunction) {
   if (messageLogLevel.priority >= logLevel.priority) {
     // Compute the message text based on log level output string, and whether
     // / or not the startTime was present
-    let now = Date.now();
-    let outputString = now.toString() + ':' + messageLogLevel.outputString;
+    const now = Date.now();
+    const outputString = now.toString() + ':' + messageLogLevel.outputString;
     computedMessage = outputString + ': ' + ((source) ? source + ': ' : '') +
       message;
     // Now log the computed message
