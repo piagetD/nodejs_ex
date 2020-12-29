@@ -47,7 +47,7 @@ const Level = {
 // The default log level
 const DEFAULT_LOG_LEVEL = Level.INFO;
 // The current Log level
-const logLevel = DEFAULT_LOG_LEVEL;
+let logLevel = DEFAULT_LOG_LEVEL;
 
 /**
  * Allows dependent module to mutate the log level
@@ -116,7 +116,7 @@ function logMessage(computedMessage) {
  */
 function trace(message, source, logFunction) {
   // TODO: Implement me
-  log.apply(Level.TRACE, message, source, logFunction);
+  return log(Level.TRACE, message, source, logFunction);
 }
 
 /**
@@ -130,7 +130,7 @@ function trace(message, source, logFunction) {
  * the current log level at the moment this function was called.
  */
 function debug(message, source, logFunction) {
-  log.apply(Level.DEBUG, message, source, logFunction);
+  return log(Level.DEBUG, message, source, logFunction);
 }
 
 /**
@@ -144,7 +144,7 @@ function debug(message, source, logFunction) {
  * the current log level at the moment this function was called.
  */
 function info(message, source, logFunction) {
-  log.apply(Level.INFO, message, source, logFunction);
+  return log(Level.INFO, message, source, logFunction);
 }
 
 /**
@@ -158,7 +158,7 @@ function info(message, source, logFunction) {
  * the current log level at the moment this function was called.
  */
 function warn(message, source, logFunction) {
-  log.apply(Level.WARN, message, source, logFunction);
+  return log(Level.WARN, message, source, logFunction);
 }
 
 /**
@@ -172,7 +172,7 @@ function warn(message, source, logFunction) {
  * the current log level at the moment this function was called.
  */
 function error(message, source, logFunction) {
-  log.apply(Level.ERROR, message, source, logFunction);
+  return log(Level.ERROR, message, source, logFunction);
 }
 
 /**
@@ -186,7 +186,7 @@ function error(message, source, logFunction) {
  * the current log level at the moment this function was called.
  */
 function fatal(message, source, logFunction) {
-  log.apply(Level.FATAL, message, source, logFunction);
+  return log(Level.FATAL, message, source, logFunction);
 }
 
 //* ***********************
